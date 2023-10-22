@@ -1091,6 +1091,20 @@ class Client extends EventEmitter {
         return ChatFactory.create(this, chat);
     }
 
+        /**
+     * save contact
+     * @param {*} number 
+     * @returns 
+     */
+    async isSaveContact(number) {
+        let contact = await this.pupPage.evaluate((number) => {
+            return window.WWebJS.getContact(number);
+        }, number);
+
+        let res = ContactFactory.create(this, contact);
+        return res.isMyContact;
+    }
+
     /**
      * Get all current contact instances
      * @returns {Promise<Array<Contact>>}
